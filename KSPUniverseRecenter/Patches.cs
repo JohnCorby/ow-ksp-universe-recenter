@@ -21,29 +21,27 @@ namespace KSPUniverseRecenter
 
         #region center of universe
 
-        private const float OffsetThreshold = 10000;
+        private const float OffsetThreshold = 5000;
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.OnPlayerRepositioned))]
-        private static bool CenterOfTheUniverse_OnPlayerRepositioned() =>
-            false;
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.Start))]
+        private static void CenterOfTheUniverse_Start(CenterOfTheUniverse __instance) =>
+            GlobalMessenger.RemoveListener("PlayerRepositioned", __instance.OnPlayerRepositioned);
 
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.FixedUpdate))]
         private static void CenterOfTheUniverse_FixedUpdate(CenterOfTheUniverse __instance)
         {
             var offset = __instance._centerBody._transform.position.magnitude;
+            Mod.Helper.Console.WriteLine($"offset = {offset}");
             if (offset > OffsetThreshold)
                 __instance._recenterUniverseNextUpdate = true;
         }
 
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.RecenterUniverseAroundPlayer))]
-        private static void CenterOfTheUniverse_RecenterUniverseAroundPlayer(CenterOfTheUniverse __instance)
-        {
-            var offset = __instance._centerBody.transform.position.magnitude;
-            Mod.Helper.Console.WriteLine($"recentering (offset = {offset})");
-        }
+        private static void CenterOfTheUniverse_RecenterUniverseAroundPlayer(CenterOfTheUniverse __instance) =>
+            Mod.Helper.Console.WriteLine("recenter");
 
         #endregion
     }
