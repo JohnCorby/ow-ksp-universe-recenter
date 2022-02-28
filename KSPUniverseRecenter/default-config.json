@@ -1,3 +1,6 @@
 {
-  "enabled": true
+  "enabled": true,
+  "settings": {
+    "Offset Threshold": 2000
+  }
 }

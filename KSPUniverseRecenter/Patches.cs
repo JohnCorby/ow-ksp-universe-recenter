@@ -21,8 +21,6 @@ namespace KSPUniverseRecenter
 
         #region center of universe
 
-        private const float OffsetThreshold = 5000;
-
         [HarmonyPostfix]
         [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.Start))]
         private static void CenterOfTheUniverse_Start(CenterOfTheUniverse __instance) =>
@@ -32,9 +30,8 @@ namespace KSPUniverseRecenter
         [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.FixedUpdate))]
         private static void CenterOfTheUniverse_FixedUpdate(CenterOfTheUniverse __instance)
         {
-            var offset = __instance._centerBody._transform.position.magnitude;
-            Mod.Helper.Console.WriteLine($"offset = {offset}");
-            if (offset > OffsetThreshold)
+            var offset = __instance._centerBody.transform.position.magnitude;
+            if (offset >= Mod.OffsetThreshold)
                 __instance._recenterUniverseNextUpdate = true;
         }
 
