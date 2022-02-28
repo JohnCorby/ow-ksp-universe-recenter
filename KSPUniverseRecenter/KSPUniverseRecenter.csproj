@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>default</LangVersion>
-    <Copyright>Copyright © 2020</Copyright>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -24,6 +23,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModTemplate.csproj.user" />
+    <Content Include="KSPUniverseRecenter.csproj.user" />
   </ItemGroup>
 </Project>
