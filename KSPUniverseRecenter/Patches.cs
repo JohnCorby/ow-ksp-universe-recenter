@@ -30,8 +30,8 @@ namespace KSPUniverseRecenter
         [HarmonyPatch(typeof(CenterOfTheUniverse), nameof(CenterOfTheUniverse.FixedUpdate))]
         private static void CenterOfTheUniverse_FixedUpdate(CenterOfTheUniverse __instance)
         {
-            var offset = __instance._centerBody.transform.position.magnitude;
-            if (offset >= Mod.OffsetThreshold)
+            var sqrOffset = __instance._centerBody.transform.position.sqrMagnitude;
+            if (sqrOffset >= Mod.OffsetThreshold * Mod.OffsetThreshold)
                 __instance._recenterUniverseNextUpdate = true;
         }
 
